@@ -1,12 +1,15 @@
 package com.example.hanghae_market.controller;
 
 import com.example.hanghae_market.dto.PostRequestDto;
+import com.example.hanghae_market.dto.PostResponseDto;
 import com.example.hanghae_market.dto.ResponseDto;
 import com.example.hanghae_market.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,5 +26,10 @@ public class PostController {
     @PutMapping("/{postid}")
     public ResponseDto editPost(@PathVariable("postid") Long id, @RequestParam("image") MultipartFile image, @RequestParam PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.editPost(id, image, postRequestDto, userDetails.getUser());
+    }
+
+    @GetMapping
+    public ResponseDto<List<PostResponseDto>> findAllPost(){
+        return postService.findAllPost();
     }
 }

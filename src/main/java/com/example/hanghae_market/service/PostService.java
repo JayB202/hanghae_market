@@ -1,6 +1,7 @@
 package com.example.hanghae_market.service;
 
 import com.example.hanghae_market.dto.PostRequestDto;
+import com.example.hanghae_market.dto.PostResponseDto;
 import com.example.hanghae_market.dto.ResponseDto;
 import com.example.hanghae_market.entity.Post;
 import com.example.hanghae_market.entity.User;
@@ -9,6 +10,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,4 +37,16 @@ public class PostService {
         } else throw new IllegalArgumentException("권한이 없습니다");
         return ResponseDto.setSuccess("물품이 수정되었습니다");
     }
+
+    @Transactional
+    public ResponseDto<List<PostResponseDto>> findAllPost() {
+        List<Post> postList = postRepository.findAllByOrderByModifiedAtDesc();
+        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
+        for (Post post : postList) {
+            postResponseDtoList.add(new PostResponseDto(post));
+        }
+        return ResponseDto.setSuccess("all data response", postResponseDtoList);
+    }
+
+
 }
