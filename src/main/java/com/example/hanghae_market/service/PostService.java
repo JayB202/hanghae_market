@@ -24,5 +24,13 @@ public class PostService {
     }
 
     @Transactional
-    public ResponseDto editPost()
+    public ResponseDto editPost(Long id, MultipartFile image, PostRequestDto postRequestDto, User user) {
+        Post post = postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 상품입니다")
+        );
+        if (post.getUser().getuserId().equals(user.getuserId())){
+            post.edit(image, postRequestDto);
+        } else throw new IllegalArgumentException("권한이 없습니다");
+        return ResponseDto.setSuccess("물품이 수정되었습니다");
+    }
 }

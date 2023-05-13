@@ -33,12 +33,6 @@ public class Post extends Timestamped {
     private List<String> tradeLocation;
 
     @Column
-    private Date createdAt;
-
-    @Column
-    private Date modifiedAt;
-
-    @Column
     private int tradeState;
 
     @ManyToOne
@@ -49,9 +43,13 @@ public class Post extends Timestamped {
         this.postTitle = postRequestDto.getPostTitle();
         this.postContent = postRequestDto.getPostContent();
         this.tradeLocation = postRequestDto.getTradeLocationRequestDtoList();
-        this.createdAt = getCreatedAt();
-        this.modifiedAt = getModifiedAt();
         this.tradeState = 0;
         this.user = user;
+    }
+
+    public void edit(MultipartFile image, PostRequestDto postRequestDto) {
+        this.postTitle = postRequestDto.getPostTitle();
+        this.postContent = postRequestDto.getPostContent();
+        this.tradeLocation = postRequestDto.getTradeLocationRequestDtoList();
     }
 }
