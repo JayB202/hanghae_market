@@ -32,4 +32,9 @@ public class PostController {
     public ResponseDto<List<PostResponseDto>> findAllPost(){
         return postService.findAllPost();
     }
+
+    @GetMapping("{postid}")
+    public ResponseDto<PostResponseDto> findPostId(@PathVariable("postid") Long id){
+        return postService.findPostId(id);
+    }
 }

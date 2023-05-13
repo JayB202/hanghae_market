@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -48,5 +49,11 @@ public class PostService {
         return ResponseDto.setSuccess("all data response", postResponseDtoList);
     }
 
-
+    @Transactional
+    public ResponseDto<PostResponseDto> findPostId(Long id){
+        Post post = postRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("존재하지 않는 물품입니다")
+        );
+        return ResponseDto.setSuccess("data response", new PostResponseDto(post))
+    }
 }
