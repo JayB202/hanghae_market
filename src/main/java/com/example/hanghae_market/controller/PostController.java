@@ -33,7 +33,7 @@ public class PostController {
         return postService.findAllPost();
     }
 
-    @GetMapping("{postid}")
+    @GetMapping("/{postid}")
     public ResponseDto<PostResponseDto> findPostId(@PathVariable("postid") Long id){
         return postService.findPostId(id);
     }
