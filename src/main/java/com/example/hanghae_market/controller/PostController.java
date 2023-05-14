@@ -52,4 +52,7 @@ public class PostController {
     public ResponseDto<PostResponseDto> findPostId(@PathVariable("postid") Long id){
         return postService.findPostId(id);
     }
+
+    @GetMapping
+    public ResponseDto<List<PostResponseDto>> findLikePost(@RequestParam)
 }
