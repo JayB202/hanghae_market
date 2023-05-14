@@ -57,4 +57,8 @@ public class Post extends Timestamped {
         this.postContent = postRequestDto.getPostContent();
         this.tradeLocation = postRequestDto.getTradeLocationRequestDtoList();
     }
+
+    public void editTd(int tradeState) {
+        this.tradeState = tradeState;
+    }
 }

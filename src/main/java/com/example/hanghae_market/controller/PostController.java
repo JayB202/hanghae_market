@@ -28,6 +28,21 @@ public class PostController {
         return postService.editPost(id, image, postRequestDto, userDetails.getUser());
     }
 
+    @PostMapping("/{postid}")
+    public ResponseDto editTrade(@PathVariable("posid") Long id, @RequestBody int tradeState, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.editTrade(id, tradeState, userDetails.getUser());
+    }
+
+    @PutMapping("/up/{postid}")
+    public ResponseDto upPost(@PathVariable("postid") Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.upPost(id, userDetails.getUser());
+    }
+
+    @PostMapping("/interest/{postid}")
+    public ResponseDto postInterest(@PathVariable("postid") Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.postInterest(id, userDetails.getUser());
+    }
+
     @GetMapping
     public ResponseDto<List<PostResponseDto>> findAllPost(){
         return postService.findAllPost();
