@@ -10,4 +10,3 @@ public class TradeLocationRequestDto {
     private String si;
     private String gu;
     private String dong;
-}
