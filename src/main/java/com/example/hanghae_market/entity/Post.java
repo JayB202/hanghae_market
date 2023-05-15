@@ -27,10 +27,6 @@ public class Post extends Timestamped {
     private String postContent;
 
     @Column
-    @ElementCollection
-    private List<String> tradeLocation;
-
-    @Column
     private int postPrice;
 
     @Column
@@ -46,7 +42,6 @@ public class Post extends Timestamped {
     public Post(PostRequestDto postRequestDto, User user) {
         this.postTitle = postRequestDto.getPostTitle();
         this.postContent = postRequestDto.getPostContent();
-        this.tradeLocation = postRequestDto.getTradeLocationRequestDtoList();
         this.postPrice = postRequestDto.getPostPice();
         this.tradeState = 0;
         this.user = user;
@@ -55,7 +50,6 @@ public class Post extends Timestamped {
     public void edit(MultipartFile image, PostRequestDto postRequestDto) {
         this.postTitle = postRequestDto.getPostTitle();
         this.postContent = postRequestDto.getPostContent();
-        this.tradeLocation = postRequestDto.getTradeLocationRequestDtoList();
     }
 
     public void editTd(int tradeState) {

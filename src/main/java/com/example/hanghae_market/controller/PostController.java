@@ -3,6 +3,7 @@ package com.example.hanghae_market.controller;
 import com.example.hanghae_market.dto.PostRequestDto;
 import com.example.hanghae_market.dto.PostResponseDto;
 import com.example.hanghae_market.dto.ResponseDto;
+import com.example.hanghae_market.security.UserDetailsImpl;
 import com.example.hanghae_market.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -54,5 +55,7 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseDto<List<PostResponseDto>> findLikePost(@RequestParam)
+    public ResponseDto<List<PostResponseDto>> findLikePost(){
+        return postService.findLikePost();
+    }
 }

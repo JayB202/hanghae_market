@@ -38,7 +38,7 @@ public class PostService {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 상품입니다")
         );
-        if (post.getUser().getuserId().equals(user.getuserId())){
+        if (post.getUser().getUserId().equals(user.getUserId())){
             post.edit(image, postRequestDto);
         } else throw new IllegalArgumentException("권한이 없습니다");
         return ResponseDto.setSuccess("물품이 수정되었습니다");
@@ -49,7 +49,7 @@ public class PostService {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 상품입니다")
         );
-        if (post.getUser().getuserId().equals(user.getuserId())){
+        if (post.getUser().getUserId().equals(user.getUserId())){
             post.editTd(tradeState);
         } else throw new IllegalArgumentException("권한이 없습니다");
         return ResponseDto.setSuccess("거래 상태 변경 완료");
@@ -60,7 +60,7 @@ public class PostService {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 상품입니다")
         );
-        if (post.getUser().getuserId().equals(user.getuserId())){
+        if (post.getUser().getUserId().equals(user.getUserId())){
             post.setModifiedAt(LocalDateTime.now());
         } else throw new IllegalArgumentException("권한이 없습니다");
         return ResponseDto.setSuccess("끌올 성공!");
@@ -98,4 +98,16 @@ public class PostService {
         );
         return ResponseDto.setSuccess("data response", new PostResponseDto(post));
     }
+
+    @Transactional
+    public ResponseDto<List<PostResponseDto>> findLikePost(){
+        List<Post> likepost = postRepository.findByOrderByInterestsDesc();
+        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
+        for (Post post : likepost) {
+            postResponseDtoList.add(new PostResponseDto(post));
+        }
+        return ResponseDto.setSuccess("interest data response", postResponseDtoList);
+    }
+
+
 }

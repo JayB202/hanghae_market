@@ -10,6 +10,4 @@ public class PostRequestDto {
     private String postTitle;
     private String postContent;
     private int postPice;
-    private List<TradeLocationRequestDto> tradeLocationRequestDtoList;
 }
-
