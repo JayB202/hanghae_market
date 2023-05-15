@@ -17,8 +17,8 @@ public class Post extends Timestamped {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //@Column
-    //private String iamge;
+    @Column
+    private String iamge;
 
     @Column(nullable = false)
     private String postTitle;
@@ -40,9 +40,10 @@ public class Post extends Timestamped {
 
 
     public Post(PostRequestDto postRequestDto, User user) {
+//        this.iamge = postRequestDto.getImage();
         this.postTitle = postRequestDto.getPostTitle();
         this.postContent = postRequestDto.getPostContent();
-        this.postPrice = postRequestDto.getPostPice();
+        this.postPrice = postRequestDto.getPostPrice();
         this.tradeState = 0;
         this.user = user;
     }

@@ -35,7 +35,7 @@ public class PostService {
 
     @Transactional // 물품 수정
     public ResponseDto editPost(Long id, MultipartFile image, PostRequestDto postRequestDto, User user) {
-        Post post = postVaildation(id);
+        Post post = postValidation(id);
         if (post.getUser().getUserId().equals(user.getUserId())){
             post.edit(image, postRequestDto);
         } else throw new IllegalArgumentException("권한이 없습니다");
@@ -44,7 +44,7 @@ public class PostService {
 
     @Transactional // 거래상태 수정
     public ResponseDto editTrade(Long id, int tradeState, User user){
-        Post post = postVaildation(id);
+        Post post = postValidation(id);
         if (post.getUser().getUserId().equals(user.getUserId())){
             post.editTd(tradeState);
         } else throw new IllegalArgumentException("권한이 없습니다");
@@ -53,7 +53,7 @@ public class PostService {
 
     @Transactional // 끌올
     public ResponseDto upPost(Long id, User user){
-        Post post = postVaildation(id);
+        Post post = postValidation(id);
         if (post.getUser().getUserId().equals(user.getUserId())){
             post.setModifiedAt(LocalDateTime.now());
         } else throw new IllegalArgumentException("권한이 없습니다");
@@ -62,7 +62,7 @@ public class PostService {
 
     @Transactional //관심상품 하트 누르기
     public ResponseDto postInterest(Long id, User user) {
-        Post post = postVaildation(id);
+        Post post = postValidation(id);
         Optional<Interest> interest = interestRepository.findByUseraAndPost(user, post);
         if (interest.isEmpty()) {
             interestRepository.saveAndFlush(new Interest(true, post, user));
@@ -85,7 +85,7 @@ public class PostService {
 
     @Transactional // 상세조회
     public ResponseDto<PostResponseDto> findPostId(Long id){
-        Post post = postVaildation(id);
+        Post post = postValidation(id);
         return ResponseDto.setSuccess("data response", new PostResponseDto(post));
     }
 
@@ -101,14 +101,14 @@ public class PostService {
 
     @Transactional // 검색상품 조회
     public ResponseDto<List<PostResponseDto>> findSearch(String keyword){
-        List<Post> serchPost = postRepository.findByPostTitleContaining(keyword);
-        if (serchPost.isEmpty()){
+        List<Post> searchPost = postRepository.findByPostTitleContaining(keyword);
+        if (searchPost.isEmpty()){
             ResponseDto.setBadRequest("검색 결과가 없습니다");
         } else {
             List<PostResponseDto> postResponseDtoList = new ArrayList<>();
-            for (Post post : serchPost) {
+            for (Post post : searchPost) {
                 postResponseDtoList.add(new PostResponseDto(post));
-                return ResponseDto.setSuccess("searched data reponse", postResponseDtoList);
+                return ResponseDto.setSuccess("searched data response", postResponseDtoList);
             }
         }
         return null;
@@ -134,7 +134,7 @@ public class PostService {
         return ResponseDto.setSuccess("My Post response", postResponseDtoList);
     }
 
-    private Post postVaildation (Long id){
+    private Post postValidation(Long id){
         return postRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("존재하지 않는 물품입니다")
         );

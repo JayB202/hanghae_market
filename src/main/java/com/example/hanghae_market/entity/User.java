@@ -3,9 +3,6 @@ package com.example.hanghae_market.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-
-import java.util.List;
 
 @NoArgsConstructor
 @Getter

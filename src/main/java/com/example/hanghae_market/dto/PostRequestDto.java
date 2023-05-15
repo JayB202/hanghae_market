@@ -6,8 +6,8 @@ import java.util.List;
 
 @Getter
 public class PostRequestDto {
-
+    private MultipartFile image;
     private String postTitle;
     private String postContent;
-    private int postPice;
+    private int postPrice;
 }
