@@ -16,6 +16,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
+
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -59,7 +67,9 @@ public class WebSecurityConfig {
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.authorizeHttpRequests()
                 .requestMatchers("/user/**").permitAll() // user 접근 승인
+
                 .requestMatchers(HttpMethod.GET, "/post/**").permitAll()
+
                 .requestMatchers(PERMIT_URL_ARRAY).permitAll() // swagger
                 .anyRequest().authenticated().and().addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         // http.exceptionHandling().accessDeniedPage("/auth/forbidden");
@@ -81,5 +91,24 @@ public class WebSecurityConfig {
         return httpSecurity.build();
 
     }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+        corsConfiguration.setAllowedOriginPatterns(List.of("*"));
+        corsConfiguration.addAllowedOrigin("http://localhost:3000");
+        corsConfiguration.addAllowedOriginPattern("*");
+        corsConfiguration.setAllowedMethods(Arrays.asList("POST", "GET", "DELETE", "PUT"));
+        corsConfiguration.setAllowedHeaders(List.of("*"));
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.addExposedHeader("*");
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
+    }
+
+
 
 }

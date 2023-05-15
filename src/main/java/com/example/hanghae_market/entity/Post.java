@@ -1,5 +1,6 @@
 package com.example.hanghae_market.entity;
 
+
 import com.example.hanghae_market.dto.PostRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
 
 @Entity
 @Getter
@@ -68,4 +70,5 @@ public class Post extends Timestamped {
     public void editTd(int tradeState) {
         this.tradeState = tradeState;
     }
+
 }

@@ -5,8 +5,9 @@ import com.example.hanghae_market.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
 import java.util.List;
-
+@Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByOrderByModifiedAtDesc();
 
@@ -19,4 +20,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByUser(User user);
 
     List<Post> findByUserOrderByModifiedAtDesc(User user);
+
+    Optional<Post> findByPostId(Long postId);
+
 }
