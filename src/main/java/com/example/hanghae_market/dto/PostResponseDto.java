@@ -1,5 +1,6 @@
 package com.example.hanghae_market.dto;
 
+import com.example.hanghae_market.entity.Interest;
 import com.example.hanghae_market.entity.Post;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +27,7 @@ public class PostResponseDto {
         this.postTitle = post.getPostTitle();
         this.postContent = post.getPostContent();
         this.postPrice = post.getPostPrice();
-        this.interestCount = (int) post.getInterests().stream().filter(interest -> interest.getInterest_status()).count();
+        this.interestCount = (int) post.getInterests().stream().filter(Interest::getInterest_status).count();
         this.tradeLocation = post.getUser().getLocation();
         this.tradeState = post.getTradeState();
         this.userId = post.getUser().getUserId();

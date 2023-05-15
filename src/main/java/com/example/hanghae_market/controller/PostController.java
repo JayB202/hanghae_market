@@ -30,7 +30,7 @@ public class PostController {
     }
 
     @PostMapping("/{postid}/tradestatus")
-    public ResponseDto editTrade(@PathVariable("posid") Long id, @RequestBody int tradeState, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseDto editTrade(@PathVariable("postid") Long id, @RequestBody int tradeState, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return postService.editTrade(id, tradeState, userDetails.getUser());
     }
 
