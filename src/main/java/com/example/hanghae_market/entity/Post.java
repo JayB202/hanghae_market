@@ -26,10 +26,10 @@ public class Post extends Timestamped {
     @Column(nullable = false)
     private String postContent;
 
-    @Column
+    @Column(nullable = false)
     private int postPrice;
 
-    @Column
+    @Column(nullable = false)
     private int tradeState;
 
     @ManyToOne

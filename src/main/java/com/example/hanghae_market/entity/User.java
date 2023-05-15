@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.List;
+
 @NoArgsConstructor
 @Getter
 @Entity(name = "TB_USER")
@@ -30,6 +32,7 @@ public class User {
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
+
 
     public User(String userId, String password, String email, String location, String phone, UserRole role) {
         this.userId = userId;

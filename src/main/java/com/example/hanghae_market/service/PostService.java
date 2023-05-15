@@ -123,4 +123,24 @@ public class PostService {
         }
         return null;
     }
+
+    @Transactional
+    public ResponseDto<List<PostResponseDto>> interestMypage(User user){
+        List<Post> myInterestPost = postRepository.findByUser(user);
+        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
+        for (Post post : myInterestPost) {
+            postResponseDtoList.add(new PostResponseDto(post));
+        }
+        return ResponseDto.setSuccess("My interest Post response", postResponseDtoList);
+    }
+
+    @Transactional
+    public ResponseDto<List<PostResponseDto>> myPost(User user){
+        List<Post> postList = postRepository.findByUserOrderByModifiedAtDesc(user);
+        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
+        for (Post post : postList) {
+            postResponseDtoList.add(new PostResponseDto(post));
+        }
+        return ResponseDto.setSuccess("My Post response", postResponseDtoList);
+    }
 }

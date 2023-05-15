@@ -29,7 +29,7 @@ public class PostController {
         return postService.editPost(id, image, postRequestDto, userDetails.getUser());
     }
 
-    @PostMapping("/{postid}")
+    @PostMapping("/{postid}/tradestatus")
     public ResponseDto editTrade(@PathVariable("posid") Long id, @RequestBody int tradeState, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return postService.editTrade(id, tradeState, userDetails.getUser());
     }
@@ -39,7 +39,7 @@ public class PostController {
         return postService.upPost(id, userDetails.getUser());
     }
 
-    @PostMapping("/interest/{postid}")
+    @PostMapping("/{postid}/interest")
     public ResponseDto postInterest(@PathVariable("postid") Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return postService.postInterest(id, userDetails.getUser());
     }
@@ -54,7 +54,7 @@ public class PostController {
         return postService.findPostId(id);
     }
 
-    @GetMapping("/like")
+    @GetMapping("/recommend")
     public ResponseDto<List<PostResponseDto>> findLikePost(){
         return postService.findLikePost();
     }
@@ -62,5 +62,15 @@ public class PostController {
     @GetMapping
     public ResponseDto<List<PostResponseDto>> findSearch(@RequestParam("keyword") String keyword) {
         return postService.findSearch(keyword);
+    }
+
+    @GetMapping("/mypage/interest")
+    public ResponseDto<List<PostResponseDto>> interestMypage(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.interestMypage(userDetails.getUser());
+    }
+
+    @GetMapping("/mypage")
+    public ResponseDto<List<PostResponseDto>> myPost(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.myPost(userDetails.getUser());
     }
 }

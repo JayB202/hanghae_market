@@ -26,7 +26,7 @@ public class PostResponseDto {
         this.postTitle = post.getPostTitle();
         this.postContent = post.getPostContent();
         this.postPrice = post.getPostPrice();
-        this.interestCount = post.getInterests().size();
+        this.interestCount = (int) post.getInterests().stream().filter(interest -> interest.getInterest_status()).count();
         this.tradeLocation = post.getUser().getLocation();
         this.tradeState = post.getTradeState();
         this.userId = post.getUser().getUserId();
