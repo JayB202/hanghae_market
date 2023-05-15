@@ -3,14 +3,16 @@ package com.example.hanghae_market.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity(name = "TB_USER")
 public class User {
     @Id
-    @Column(name = "userId", nullable = false)
+    @Column(name = "userId", nullable = false, unique = true)
     private String userId;
 
     @Column(nullable = false)
@@ -18,6 +20,7 @@ public class User {
 
 //    @Column(nullable = false)
 //    private String username;
+
     @Column(nullable = false)
     private String email;
 
