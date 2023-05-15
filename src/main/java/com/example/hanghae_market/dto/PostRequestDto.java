@@ -9,4 +9,7 @@ public class PostRequestDto {
     private String postTitle;
     private String postContent;
     private int postPrice;
+    private String tradeLocation;
+    private String specificLocation;
+    private Boolean isShared;
 }

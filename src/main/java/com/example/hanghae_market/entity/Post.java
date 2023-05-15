@@ -32,6 +32,15 @@ public class Post extends Timestamped {
     @Column(nullable = false)
     private int tradeState;
 
+    @Column
+    private String tradeLocation;
+
+    @Column
+    private String specificLocation;
+
+    @Column
+    private Boolean isShared;
+
     @ManyToOne
     private User user;
 
@@ -45,6 +54,9 @@ public class Post extends Timestamped {
         this.postContent = postRequestDto.getPostContent();
         this.postPrice = postRequestDto.getPostPrice();
         this.tradeState = 0;
+        this.tradeLocation = postRequestDto.getTradeLocation();
+        this.specificLocation = postRequestDto.getSpecificLocation();
+        this.isShared = postRequestDto.getIsShared();
         this.user = user;
     }
 
