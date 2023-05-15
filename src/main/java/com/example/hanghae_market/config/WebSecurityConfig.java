@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -67,9 +66,7 @@ public class WebSecurityConfig {
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.authorizeHttpRequests()
                 .requestMatchers("/user/**").permitAll() // user 접근 승인
-
                 .requestMatchers(HttpMethod.GET, "/post/**").permitAll()
-
                 .requestMatchers(PERMIT_URL_ARRAY).permitAll() // swagger
                 .anyRequest().authenticated().and().addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         // http.exceptionHandling().accessDeniedPage("/auth/forbidden");
@@ -91,7 +88,6 @@ public class WebSecurityConfig {
         return httpSecurity.build();
 
     }
-
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -108,7 +104,6 @@ public class WebSecurityConfig {
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }
-
 
 
 }

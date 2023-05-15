@@ -33,6 +33,7 @@ public class ChatRoomService {
         if(post.getUser().getUserId().equals(user.getUserId())){
             throw new RuntimeException("CAN_NOT_CHAT_WITH_YOURSELF");
         }
+
         ChatRoom chatRoom = chatRoomRepository.findByPostIdAndBuyerId(postId, user.getUserId()).orElse(ChatRoom.of(post, user));
         chatRoomRepository.save(chatRoom);
         readChat(chatRoom);

@@ -1,6 +1,5 @@
 package com.example.hanghae_market.entity;
 
-
 import com.example.hanghae_market.dto.PostRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
+
 @NoArgsConstructor
 public class Post extends Timestamped {
 
@@ -34,6 +34,7 @@ public class Post extends Timestamped {
     @Column(nullable = false)
     private int tradeState;
 
+
     @Column
     private String tradeLocation;
 
@@ -52,6 +53,7 @@ public class Post extends Timestamped {
 
     public Post(PostRequestDto postRequestDto, User user) {
 //        this.image = postRequestDto.getImage();
+
         this.postTitle = postRequestDto.getPostTitle();
         this.postContent = postRequestDto.getPostContent();
         this.postPrice = postRequestDto.getPostPrice();

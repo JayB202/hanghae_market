@@ -13,3 +13,4 @@ public class PostRequestDto {
     private String specificLocation;
     private Boolean isShared;
 }
+

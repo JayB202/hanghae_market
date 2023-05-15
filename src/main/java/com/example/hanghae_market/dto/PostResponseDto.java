@@ -1,5 +1,6 @@
 package com.example.hanghae_market.dto;
 
+
 import com.example.hanghae_market.entity.Interest;
 import com.example.hanghae_market.entity.Post;
 import lombok.NoArgsConstructor;

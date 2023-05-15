@@ -19,8 +19,7 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/add")
-    public ResponseDto addPost(@RequestParam("image")MultipartFile image, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    @PostMapping("/add")    public ResponseDto addPost(@RequestParam("image")MultipartFile image, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.addPost(image, postRequestDto, userDetails.getUser());
     }
 
@@ -64,3 +63,4 @@ public class PostController {
         return postService.findSearch(keyword);
     }
 }
+

@@ -34,6 +34,14 @@ dependencies {
 
     //시큐리티 관련
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+    implementation group: 'org.json', name: 'json', version: '20220924'
+
+    compileOnly('javax.servlet:javax.servlet-api:4.0.1')
+//
+//    //스웨거 관련
+//    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+//
 
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -57,6 +65,9 @@ dependencies {
     implementation 'org.webjars:sockjs-client:1.1.2'
     implementation 'org.webjars:stomp-websocket:2.3.3-1'
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
+
+    //DB
+    implementation("org.mariadb.jdbc:mariadb-java-client:2.1.2")
 }
 
 tasks.named('test') {
