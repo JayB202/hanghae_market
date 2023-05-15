@@ -54,8 +54,13 @@ public class PostController {
         return postService.findPostId(id);
     }
 
-    @GetMapping
+    @GetMapping("/like")
     public ResponseDto<List<PostResponseDto>> findLikePost(){
         return postService.findLikePost();
+    }
+
+    @GetMapping
+    public ResponseDto<List<PostResponseDto>> findSearch(@RequestParam("keyword") String keyword) {
+        return postService.findSearch(keyword);
     }
 }

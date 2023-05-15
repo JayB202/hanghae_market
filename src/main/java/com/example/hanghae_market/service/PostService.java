@@ -109,5 +109,18 @@ public class PostService {
         return ResponseDto.setSuccess("interest data response", postResponseDtoList);
     }
 
-
+    @Transactional
+    public ResponseDto<List<PostResponseDto>> findSearch(String keyword){
+        List<Post> serchPost = postRepository.findByPostTitleContaining(keyword);
+        if (serchPost.isEmpty()){
+            ResponseDto.setBadRequest("검색 결과가 없습니다");
+        } else {
+            List<PostResponseDto> postResponseDtoList = new ArrayList<>();
+            for (Post post : serchPost) {
+                postResponseDtoList.add(new PostResponseDto(post));
+                return ResponseDto.setSuccess("searched data reponse", postResponseDtoList);
+            }
+        }
+        return null;
+    }
 }
