@@ -17,7 +17,7 @@ public class Interest {
     private Boolean interest_status;
 
     @ManyToOne
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "postId")
     private Post post;
 
     @ManyToOne

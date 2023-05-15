@@ -39,20 +39,20 @@ public class ResponseDto<T> {
                         .build()
                 );
     }
-//
-//    public static <T> ResponseDto<T> setSuccess(String message, T data){
-//        return ResponseDto.set(HttpStatus.OK, message, data);
-//    }
-//    public static <T> ResponseDto<T> setBadRequest(String message){
-//        return ResponseDto.set(HttpStatus.BAD_REQUEST, message, null);
-//    }
-//    public static <T> ResponseDto<T> setBadRequest(String message, T data){
-//        return ResponseDto.set(HttpStatus.BAD_REQUEST, message, data);
-//    }
-//
-//    public static <T> ResponseDto<T> setSuccess(String message){
-//        return ResponseDto.set(HttpStatus.OK, message, null);
-//    }
+
+    public static <T> ResponseDto<T> setSuccess(String message, T data){
+        return ResponseDto.set(message, true, HttpStatus.OK, data);
+    }
+    public static <T> ResponseDto<T> setBadRequest(String message){
+        return ResponseDto.set(message, true, HttpStatus.OK, null);
+    }
+    public static <T> ResponseDto<T> setBadRequest(String message, T data){
+        return ResponseDto.set(message, true, HttpStatus.OK, data);
+    }
+
+    public static <T> ResponseDto<T> setSuccess(String message){
+        return ResponseDto.set(message, true, HttpStatus.OK, null);
+    }
 //    public static ResponseEntity<ResponseDto> getMessages
 
 }

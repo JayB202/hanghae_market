@@ -19,8 +19,8 @@ public class Post extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    //@Column
-    //private String iamge;
+//    @Column
+//    private String iamge;
 
     @Column(nullable = false)
     private String postTitle;
@@ -36,10 +36,10 @@ public class Post extends Timestamped {
 
     @ManyToOne
     private User user;
-//
-//    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-//    List<Interest> interests;
-//
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    List<Interest> interests;
+
 
     public Post(PostRequestDto postRequestDto, User user) {
         this.postTitle = postRequestDto.getPostTitle();
@@ -49,12 +49,12 @@ public class Post extends Timestamped {
         this.user = user;
     }
 
-//    public void edit(MultipartFile image, PostRequestDto postRequestDto) {
-//        this.postTitle = postRequestDto.getPostTitle();
-//        this.postContent = postRequestDto.getPostContent();
-//    }
-//
-//    public void editTd(int tradeState) {
-//        this.tradeState = tradeState;
-//    }
+    public void edit(MultipartFile image, PostRequestDto postRequestDto) {
+        this.postTitle = postRequestDto.getPostTitle();
+        this.postContent = postRequestDto.getPostContent();
+    }
+
+    public void editTd(int tradeState) {
+        this.tradeState = tradeState;
+    }
 }

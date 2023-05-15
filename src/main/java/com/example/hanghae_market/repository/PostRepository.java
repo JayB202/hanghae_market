@@ -15,13 +15,13 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByOrderByModifiedAtDesc();
 
-//    @Query("SELECT p FROM Post p WHERE p.interests=TRUE")
-//    List<Post> findByOrderByInterestsDesc();
-//
-//    List<Post> findByPostTitleContaining(String keyword);
-//
-//    @Query("SELECT p FROM Post p WHERE p.interests=TRUE")
-//    List<Post> findByUser(User user);
+    @Query("SELECT p FROM Post p WHERE p.interests=TRUE")
+    List<Post> findByOrderByInterestsDesc();
+
+    List<Post> findByPostTitleContaining(String keyword);
+
+    @Query("SELECT p FROM Post p WHERE p.interests=TRUE")
+    List<Post> findByUser(User user);
 
     List<Post> findByUserOrderByModifiedAtDesc(User user);
 
