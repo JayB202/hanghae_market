@@ -26,51 +26,43 @@ public class PostService {
     private final PostRepository postRepository;
     private final InterestRepository interestRepository;
 
-    @Transactional
+    @Transactional // 물품 등록
     public ResponseDto addPost(MultipartFile image, PostRequestDto postRequestDto, User user) {
         Post post = new Post(postRequestDto, user);
         postRepository.saveAndFlush(post);
         return ResponseDto.setSuccess("물품 등록 완료");
     }
 
-    @Transactional
+    @Transactional // 물품 수정
     public ResponseDto editPost(Long id, MultipartFile image, PostRequestDto postRequestDto, User user) {
-        Post post = postRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 상품입니다")
-        );
+        Post post = postVaildation(id);
         if (post.getUser().getUserId().equals(user.getUserId())){
             post.edit(image, postRequestDto);
         } else throw new IllegalArgumentException("권한이 없습니다");
         return ResponseDto.setSuccess("물품이 수정되었습니다");
     }
 
-    @Transactional
+    @Transactional // 거래상태 수정
     public ResponseDto editTrade(Long id, int tradeState, User user){
-        Post post = postRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 상품입니다")
-        );
+        Post post = postVaildation(id);
         if (post.getUser().getUserId().equals(user.getUserId())){
             post.editTd(tradeState);
         } else throw new IllegalArgumentException("권한이 없습니다");
         return ResponseDto.setSuccess("거래 상태 변경 완료");
     }
 
-    @Transactional
+    @Transactional // 끌올
     public ResponseDto upPost(Long id, User user){
-        Post post = postRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 상품입니다")
-        );
+        Post post = postVaildation(id);
         if (post.getUser().getUserId().equals(user.getUserId())){
             post.setModifiedAt(LocalDateTime.now());
         } else throw new IllegalArgumentException("권한이 없습니다");
         return ResponseDto.setSuccess("끌올 성공!");
     }
 
-    @Transactional
+    @Transactional //관심상품 하트 누르기
     public ResponseDto postInterest(Long id, User user) {
-        Post post = postRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 상품입니다")
-        );
+        Post post = postVaildation(id);
         Optional<Interest> interest = interestRepository.findByUseraAndPost(user, post);
         if (interest.isEmpty()) {
             interestRepository.saveAndFlush(new Interest(true, post, user));
@@ -81,7 +73,7 @@ public class PostService {
         return ResponseDto.setSuccess("request success");
     }
 
-    @Transactional
+    @Transactional // 전체조회
     public ResponseDto<List<PostResponseDto>> findAllPost() {
         List<Post> postList = postRepository.findAllByOrderByModifiedAtDesc();
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
@@ -91,15 +83,13 @@ public class PostService {
         return ResponseDto.setSuccess("all data response", postResponseDtoList);
     }
 
-    @Transactional
+    @Transactional // 상세조회
     public ResponseDto<PostResponseDto> findPostId(Long id){
-        Post post = postRepository.findById(id).orElseThrow(
-                () -> new NoSuchElementException("존재하지 않는 물품입니다")
-        );
+        Post post = postVaildation(id);
         return ResponseDto.setSuccess("data response", new PostResponseDto(post));
     }
 
-    @Transactional
+    @Transactional // 추천상품 조회
     public ResponseDto<List<PostResponseDto>> findLikePost(){
         List<Post> likepost = postRepository.findByOrderByInterestsDesc();
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
@@ -109,7 +99,7 @@ public class PostService {
         return ResponseDto.setSuccess("interest data response", postResponseDtoList);
     }
 
-    @Transactional
+    @Transactional // 검색상품 조회
     public ResponseDto<List<PostResponseDto>> findSearch(String keyword){
         List<Post> serchPost = postRepository.findByPostTitleContaining(keyword);
         if (serchPost.isEmpty()){
@@ -124,7 +114,7 @@ public class PostService {
         return null;
     }
 
-    @Transactional
+    @Transactional // 마이페이지 관심상품 조회
     public ResponseDto<List<PostResponseDto>> interestMypage(User user){
         List<Post> myInterestPost = postRepository.findByUser(user);
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
@@ -134,7 +124,7 @@ public class PostService {
         return ResponseDto.setSuccess("My interest Post response", postResponseDtoList);
     }
 
-    @Transactional
+    @Transactional // 마이페이지 판매목록 조회
     public ResponseDto<List<PostResponseDto>> myPost(User user){
         List<Post> postList = postRepository.findByUserOrderByModifiedAtDesc(user);
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
@@ -142,5 +132,11 @@ public class PostService {
             postResponseDtoList.add(new PostResponseDto(post));
         }
         return ResponseDto.setSuccess("My Post response", postResponseDtoList);
+    }
+
+    private Post postVaildation (Long id){
+        return postRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("존재하지 않는 물품입니다")
+        );
     }
 }
