@@ -1,45 +1,27 @@
 package com.example.hanghae_market.dto;
 
-
-import com.example.hanghae_market.customData.CustomMessage;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import org.springframework.http.ResponseEntity;
-
+import org.springframework.http.HttpStatus;
 
 @Getter
-@Builder
-@AllArgsConstructor
-public class ResponseDto {
+@AllArgsConstructor(staticName = "set")
+public class ResponseDto<T> {
+    private HttpStatus status;
     private String message;
-    private boolean status;
-    private Object tData;
+    private T data;
 
-
-    public static ResponseEntity<ResponseDto> toResponseEntity(CustomMessage customMessage, Object data) {
-        return ResponseEntity
-                .status(customMessage.getHttpStatus())
-                .body(ResponseDto.builder()
-                        .status(!customMessage.getHttpStatus().isError())
-                        .message(customMessage.getCustomMessage())
-                        .tData(data)
-                        .build()
-                );
+    public static <T> ResponseDto<T> setSuccess(String message, T data){
+        return ResponseDto.set(HttpStatus.OK, message, data);
     }
-    public static ResponseEntity<ResponseDto> toResponseEntity(CustomMessage customMessage) {
-        return ResponseEntity
-                .status(customMessage.getHttpStatus())
-                .body(ResponseDto.builder()
-                        .status(!customMessage.getHttpStatus().isError())
-                        .message(customMessage.getCustomMessage())
-                        .tData(customMessage)
-                        .build()
-                );
+    public static <T> ResponseDto<T> setBadRequest(String message){
+        return ResponseDto.set(HttpStatus.BAD_REQUEST, message, null);
+    }
+    public static <T> ResponseDto<T> setBadRequest(String message, T data){
+        return ResponseDto.set(HttpStatus.BAD_REQUEST, message, data);
     }
 
-//    public static ResponseEntity<ResponseDto> getMessages
-
+    public static <T> ResponseDto<T> setSuccess(String message){
+        return ResponseDto.set(HttpStatus.OK, message, null);
+    }
 }
-
-
