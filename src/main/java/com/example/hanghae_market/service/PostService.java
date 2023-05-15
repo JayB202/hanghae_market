@@ -63,7 +63,7 @@ public class PostService {
     @Transactional //관심상품 하트 누르기
     public ResponseDto postInterest(Long id, User user) {
         Post post = postValidation(id);
-        Optional<Interest> interest = interestRepository.findByUseraAndPost(user, post);
+        Optional<Interest> interest = interestRepository.findByUserAndPost(user, post);
         if (interest.isEmpty()) {
             interestRepository.saveAndFlush(new Interest(true, post, user));
         } else {
@@ -112,26 +112,6 @@ public class PostService {
             }
         }
         return null;
-    }
-
-    @Transactional // 마이페이지 관심상품 조회
-    public ResponseDto<List<PostResponseDto>> interestMypage(User user){
-        List<Post> myInterestPost = postRepository.findByUser(user);
-        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
-        for (Post post : myInterestPost) {
-            postResponseDtoList.add(new PostResponseDto(post));
-        }
-        return ResponseDto.setSuccess("My interest Post response", postResponseDtoList);
-    }
-
-    @Transactional // 마이페이지 판매목록 조회
-    public ResponseDto<List<PostResponseDto>> myPost(User user){
-        List<Post> postList = postRepository.findByUserOrderByModifiedAtDesc(user);
-        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
-        for (Post post : postList) {
-            postResponseDtoList.add(new PostResponseDto(post));
-        }
-        return ResponseDto.setSuccess("My Post response", postResponseDtoList);
     }
 
     private Post postValidation(Long id){

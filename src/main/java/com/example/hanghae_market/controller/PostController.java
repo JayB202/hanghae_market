@@ -63,14 +63,4 @@ public class PostController {
     public ResponseDto<List<PostResponseDto>> findSearch(@RequestParam("keyword") String keyword) {
         return postService.findSearch(keyword);
     }
-
-    @GetMapping("/mypage/interest")
-    public ResponseDto<List<PostResponseDto>> interestMypage(@AuthenticationPrincipal UserDetailsImpl userDetails){
-        return postService.interestMypage(userDetails.getUser());
-    }
-
-    @GetMapping("/mypage")
-    public ResponseDto<List<PostResponseDto>> myPost(@AuthenticationPrincipal UserDetailsImpl userDetails){
-        return postService.myPost(userDetails.getUser());
-    }
 }

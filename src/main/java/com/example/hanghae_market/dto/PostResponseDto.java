@@ -22,7 +22,7 @@ public class PostResponseDto {
     private LocalDateTime modifiedAt;
 
     public PostResponseDto(Post post) {
-        this.postId = post.getId();
+        this.postId = post.getPostId();
         this.postTitle = post.getPostTitle();
         this.postContent = post.getPostContent();
         this.postPrice = post.getPostPrice();
