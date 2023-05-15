@@ -33,7 +33,6 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
-
     public User(String userId, String password, String email, String location, String phone, UserRole role) {
         this.userId = userId;
         this.password = password;
