@@ -3,6 +3,7 @@ package com.example.hanghae_market.dto;
 
 
 import com.example.hanghae_market.customData.CustomMessage;
+import com.example.hanghae_market.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -55,6 +56,8 @@ public class ResponseDto<T> {
         return ResponseDto.set(message, true, HttpStatus.OK, null);
     }
 //    public static ResponseEntity<ResponseDto> getMessages
+
+
 
 }
 
