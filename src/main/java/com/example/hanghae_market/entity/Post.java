@@ -5,6 +5,8 @@ import com.example.hanghae_market.dto.PostRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Getter
-
+@Setter
 @NoArgsConstructor
 public class Post extends Timestamped {
 
@@ -48,6 +50,10 @@ public class Post extends Timestamped {
     @ManyToOne
     private User user;
 
+    @ColumnDefault("0")
+    private Long postInterests;
+
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     List<Interest> interests;
 
@@ -63,6 +69,7 @@ public class Post extends Timestamped {
         this.specificLocation = postRequestDto.getSpecificLocation();
         this.isShared = postRequestDto.getIsShared();
         this.user = user;
+        this.postInterests = 0L;
     }
 
     public void edit(MultipartFile image, PostRequestDto postRequestDto) {
