@@ -1,0 +1,41 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        globally_quoted_identifiers: 'true'
+        format_sql: 'true'
+        show_sql: 'true'
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
+  messages:
+    encoding: UTF-8
+  thymeleaf:
+    cache: 'false'
+  servlet:
+    multipart:
+      max-file-size: 7MB
+      max-request-size: 7MB
+  datasource:
+    password: rkdehdgus
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    url: jdbc:mariadb://hanghaemarket.cyjzfk9jlzie.ap-northeast-2.rds.amazonaws.com:3306/hanghaeMarket
+cloud:
+  aws:
+    s3:
+      bucket: rkfclbucket
+    credentials:
+      accessKey: AKIAUGNNZEYRMZH76R2W
+      secretKey: 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
+    stack:
+      auto-: 'false'
+    region:
+      static: ap-northeast-2
+      auto: 'false'
+jwt:
+  secret:
+    key: 7ZWt7ZW0OTntmZTsnbTtjIXtlZzqta3snYTrhIjrqLjshLjqs4TroZzrgpjslYTqsIDsnpDtm4zrpa3tlZzqsJzrsJzsnpDrpbzrp4zrk6TslrTqsIDsnpA=
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
