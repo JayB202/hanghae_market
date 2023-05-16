@@ -1,23 +1,28 @@
-package com.example.hanghae_market.entity;
 
+package com.example.hanghae_market.entity;
 
 import com.example.hanghae_market.dto.PostRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
+import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class Post extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long postId;
+
+    @Column
+    private String image;
 
     @Column(nullable = false)
     private String postTitle;
@@ -43,15 +48,16 @@ public class Post extends Timestamped {
     @ManyToOne
     private User user;
 
+    @ColumnDefault("0")
+    private Long postInterests;
+
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     List<Interest> interests;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    List<ImagePath> imagePathList;
 
-
-    public Post(PostRequestDto postRequestDto, User user, List<ImagePath> imagePathList) {
-        this.imagePathList = imagePathList;
+    public Post(PostRequestDto postRequestDto, User user) {
+//        this.image = postRequestDto.getImage();
         this.postTitle = postRequestDto.getPostTitle();
         this.postContent = postRequestDto.getPostContent();
         this.postPrice = postRequestDto.getPostPrice();
@@ -60,10 +66,10 @@ public class Post extends Timestamped {
         this.specificLocation = postRequestDto.getSpecificLocation();
         this.isShared = postRequestDto.getIsShared();
         this.user = user;
+        this.postInterests = 0L;
     }
 
     public void edit(PostRequestDto postRequestDto) {
-//        this.imagePathList = imagePathList;
         this.postTitle = postRequestDto.getPostTitle();
         this.postContent = postRequestDto.getPostContent();
     }

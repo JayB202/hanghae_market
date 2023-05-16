@@ -1,3 +1,4 @@
+
 package com.example.hanghae_market.controller;
 
 import com.example.hanghae_market.dto.PostRequestDto;
@@ -19,9 +20,8 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/add")
-    public ResponseDto addPost(@RequestParam("image")MultipartFile[] imageList, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.addPost(imageList, postRequestDto, userDetails.getUser());
+    @PostMapping("/add") public ResponseDto addPost(@RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.addPost(postRequestDto, userDetails.getUser());
     }
 
     @PutMapping("/{postid}")
@@ -69,3 +69,5 @@ public class PostController {
         return postService.findSearch(keyword);
     }
 }
+
+
