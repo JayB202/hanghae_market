@@ -19,9 +19,6 @@ public class Post extends Timestamped {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long postId;
 
-    @Column
-    private String image;
-
     @Column(nullable = false)
     private String postTitle;
 
@@ -49,9 +46,12 @@ public class Post extends Timestamped {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     List<Interest> interests;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    List<ImagePath> imagePathList;
 
-    public Post(PostRequestDto postRequestDto, User user) {
-//        this.image = postRequestDto.getImage();
+
+    public Post(PostRequestDto postRequestDto, User user, List<ImagePath> imagePathList) {
+        this.imagePathList = imagePathList;
         this.postTitle = postRequestDto.getPostTitle();
         this.postContent = postRequestDto.getPostContent();
         this.postPrice = postRequestDto.getPostPrice();
@@ -62,7 +62,8 @@ public class Post extends Timestamped {
         this.user = user;
     }
 
-    public void edit(MultipartFile image, PostRequestDto postRequestDto) {
+    public void edit(PostRequestDto postRequestDto) {
+//        this.imagePathList = imagePathList;
         this.postTitle = postRequestDto.getPostTitle();
         this.postContent = postRequestDto.getPostContent();
     }

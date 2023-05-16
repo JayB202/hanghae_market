@@ -3,15 +3,12 @@ package com.example.hanghae_market.controller;
 import com.example.hanghae_market.dto.UserRequestDto;
 import com.example.hanghae_market.dto.UserResponseDto;
 import com.example.hanghae_market.service.UserService;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

@@ -20,13 +20,18 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/add")
-    public ResponseDto addPost(@RequestParam("image")MultipartFile image, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.addPost(image, postRequestDto, userDetails.getUser());
+    public ResponseDto addPost(@RequestParam("image")MultipartFile[] imageList, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.addPost(imageList, postRequestDto, userDetails.getUser());
     }
 
     @PutMapping("/{postid}")
-    public ResponseDto editPost(@PathVariable("postid") Long id, @RequestParam("image") MultipartFile image, @RequestParam PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.editPost(id, image, postRequestDto, userDetails.getUser());
+    public ResponseDto editPost(@PathVariable("postid") Long postid, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.editPost(postid, postRequestDto, userDetails.getUser());
+    }
+
+    @DeleteMapping("/{postid}/delete")
+    public ResponseDto deletePost(@PathVariable("postid") Long postid, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.deleteTrade(postid, userDetails.getUser());
     }
 
     @PostMapping("/{postid}/tradestatus")
