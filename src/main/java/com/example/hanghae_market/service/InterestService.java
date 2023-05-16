@@ -23,7 +23,7 @@ public class InterestService {
     public InterestResponseDto postInterestService(Long postId, User user){
         Post post = postCheck(postId);
 
-        Optional<PostInterest> interestCheck = postInterestRepository.findByPostInterestUserAndPostInterestId(user.getUserId(), postId);
+        Optional<PostInterest> interestCheck = postInterestRepository.findByPostInterestsIsEndingWithAndPostInterestId(user.getUserId(), postId);
 
         if (interestCheck.isPresent()) {
             PostInterest postInterest = postInterestCheck(user.getUserId(), postId);
@@ -42,7 +42,7 @@ public class InterestService {
     }
 
     private PostInterest postInterestCheck(String userId, Long postId) {
-        return postInterestRepository.findByPostInterestUserAndPostInterestId(userId, postId).orElseThrow(
+        return postInterestRepository.findByPostInterestsIsEndingWithAndPostInterestId(userId, postId).orElseThrow(
                 ()-> new IllegalArgumentException("실패")
         );
     }

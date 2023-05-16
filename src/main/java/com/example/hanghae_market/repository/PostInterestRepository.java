@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface PostInterestRepository extends JpaRepository<PostInterest, Long> {
-    Optional<PostInterest> findByPostInterestUserAndPostInterestId(String userId, Long postId);
+    Optional<PostInterest> findByPostInterestsIsEndingWithAndPostInterestId(String userId, Long postId);
 
     @Query("SELECT count(p) FROM PostInterest p WHERE p.postInterestId = :postId AND p.postInterests= true")
     Long getPostInterestsCount(@Param("postId") Long postId);
