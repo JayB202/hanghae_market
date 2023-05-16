@@ -35,18 +35,18 @@ public class PostController {
     }
 
     @PostMapping("/{postid}/tradestatus")
-    public ResponseDto editTrade(@PathVariable("postid") Long id, @RequestBody int tradeState, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return postService.editTrade(id, tradeState, userDetails.getUser());
+    public ResponseDto editTrade(@PathVariable("postid") Long postid, @RequestBody int tradeState, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.editTrade(postid, tradeState, userDetails.getUser());
     }
 
     @PutMapping("/up/{postid}")
-    public ResponseDto upPost(@PathVariable("postid") Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return postService.upPost(id, userDetails.getUser());
+    public ResponseDto upPost(@PathVariable("postid") Long postid, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.upPost(postid, userDetails.getUser());
     }
 
     @PostMapping("/{postid}/interest")
-    public ResponseDto postInterest(@PathVariable("postid") Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return postService.postInterest(id, userDetails.getUser());
+    public ResponseDto postInterest(@PathVariable("postid") Long postid, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.postInterest(postid, userDetails.getUser());
     }
 
     @GetMapping
@@ -55,8 +55,8 @@ public class PostController {
     }
 
     @GetMapping("/{postid}")
-    public ResponseDto<PostResponseDto> findPostId(@PathVariable("postid") Long id){
-        return postService.findPostId(id);
+    public ResponseDto<PostResponseDto> findPostId(@PathVariable("postid") Long postid){
+        return postService.findPostId(postid);
     }
 
     @GetMapping("/recommend")
