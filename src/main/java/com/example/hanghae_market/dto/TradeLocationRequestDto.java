@@ -1,3 +1,4 @@
+
 package com.example.hanghae_market.dto;
 
 import lombok.Getter;
@@ -10,4 +11,3 @@ public class TradeLocationRequestDto {
     private String si;
     private String gu;
     private String dong;
-}

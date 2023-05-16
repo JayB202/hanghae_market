@@ -1,3 +1,4 @@
+
 package com.example.hanghae_market.dto;
 
 
@@ -56,5 +57,4 @@ public class ResponseDto<T> {
 //    public static ResponseEntity<ResponseDto> getMessages
 
 }
-
 

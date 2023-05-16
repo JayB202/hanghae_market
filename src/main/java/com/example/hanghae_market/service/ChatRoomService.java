@@ -1,3 +1,4 @@
+
 package com.example.hanghae_market.service;
 
 import com.example.hanghae_market.dto.ResponseDto;
@@ -19,7 +20,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import static com.example.hanghae_market.customData.CustomMessage.*;
-import static org.springframework.data.util.Pair.of;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +34,8 @@ public class ChatRoomService {
         if(post.getUser().getUserId().equals(user.getUserId())){
             throw new RuntimeException("CAN_NOT_CHAT_WITH_YOURSELF");
         }
-        ChatRoom chatRoom = ChatRoom.of(post, user);
+
+        ChatRoom chatRoom = chatRoomRepository.findByPostIdAndBuyerId(postId, user.getUserId()).orElse(ChatRoom.of(post, user));
         chatRoomRepository.save(chatRoom);
         readChat(chatRoom);
 

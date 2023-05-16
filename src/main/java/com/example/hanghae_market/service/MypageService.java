@@ -1,3 +1,4 @@
+
 package com.example.hanghae_market.service;
 
 import com.example.hanghae_market.dto.PostResponseDto;
@@ -38,3 +39,4 @@ public class MypageService {
         return ResponseDto.setSuccess("My Post response", postResponseDtoList);
     }
 }
+

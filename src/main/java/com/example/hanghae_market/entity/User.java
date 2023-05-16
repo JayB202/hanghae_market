@@ -1,3 +1,4 @@
+
 package com.example.hanghae_market.entity;
 
 import jakarta.persistence.*;
@@ -43,3 +44,4 @@ public class User {
         this.role = role;
     }
 }
+

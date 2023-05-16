@@ -1,3 +1,4 @@
+
 package com.example.hanghae_market.entity;
 
 import jakarta.persistence.*;
@@ -17,7 +18,7 @@ public class Interest {
     private Boolean interest_status;
 
     @ManyToOne
-    @JoinColumn(name = "postId")
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @ManyToOne

@@ -26,6 +26,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final InterestRepository interestRepository;
 
+
     @Transactional // 물품 등록
     public ResponseDto addPost(MultipartFile image, PostRequestDto postRequestDto, User user) {
         Post post = new Post(postRequestDto, user);
