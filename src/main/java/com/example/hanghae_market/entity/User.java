@@ -1,9 +1,9 @@
+
 package com.example.hanghae_market.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -14,7 +14,6 @@ import org.hibernate.annotations.ColumnDefault;
 public class User {
     @Id
     @Column(name = "userId", nullable = false, unique = true)
-
     private String userId;
 
     @Column(nullable = false)
@@ -45,3 +44,4 @@ public class User {
         this.role = role;
     }
 }
+

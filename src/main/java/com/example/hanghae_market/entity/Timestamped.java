@@ -1,3 +1,4 @@
+
 package com.example.hanghae_market.entity;
 
 import jakarta.persistence.EntityListeners;
@@ -22,4 +23,3 @@ public class Timestamped {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 }
-

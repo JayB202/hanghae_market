@@ -1,3 +1,4 @@
+
 package com.example.hanghae_market.entity;
 
 import jakarta.persistence.*;

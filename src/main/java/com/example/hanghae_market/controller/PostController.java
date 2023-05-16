@@ -1,3 +1,4 @@
+
 package com.example.hanghae_market.controller;
 
 import com.example.hanghae_market.dto.PostRequestDto;
@@ -63,4 +64,5 @@ public class PostController {
         return postService.findSearch(keyword);
     }
 }
+
 

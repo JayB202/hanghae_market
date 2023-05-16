@@ -1,3 +1,4 @@
+
 package com.example.hanghae_market.config;
 
 import com.example.hanghae_market.jwt.JwtAuthFilter;
@@ -66,7 +67,8 @@ public class WebSecurityConfig {
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.authorizeHttpRequests()
                 .requestMatchers("/user/**").permitAll() // user 접근 승인
-                .requestMatchers(HttpMethod.GET, "/post/**").permitAll()
+//                .requestMatchers(HttpMethod.GET, "/post").permitAll()
+                .requestMatchers(HttpMethod.GET,"/post/**").permitAll()
                 .requestMatchers(PERMIT_URL_ARRAY).permitAll() // swagger
                 .anyRequest().authenticated().and().addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         // http.exceptionHandling().accessDeniedPage("/auth/forbidden");

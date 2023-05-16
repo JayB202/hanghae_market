@@ -1,3 +1,4 @@
+
 package com.example.hanghae_market.dto;
 
 import lombok.Getter;
@@ -13,4 +14,3 @@ public class PostRequestDto {
     private String specificLocation;
     private Boolean isShared;
 }
-
