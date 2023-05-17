@@ -91,23 +91,23 @@ public class WebSecurityConfig {
         return httpSecurity.build();
 
     }
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
+//     @Bean
+//     public CorsConfigurationSource corsConfigurationSource() {
+//         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        corsConfiguration.setAllowedOriginPatterns(List.of("*"));
-        corsConfiguration.addAllowedOrigin("http://localhost:3000");
-//        corsConfiguration.addAllowedOrigin("http://localhost:3000");
-        corsConfiguration.addAllowedOriginPattern("*");
-        corsConfiguration.setAllowedMethods(Arrays.asList("POST", "GET", "DELETE", "PUT"));
-        corsConfiguration.setAllowedHeaders(List.of("*"));
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.addExposedHeader("*");
+//         corsConfiguration.setAllowedOriginPatterns(List.of("*"));
+//         corsConfiguration.addAllowedOrigin("http://localhost:3000");
+// //        corsConfiguration.addAllowedOrigin("http://localhost:3000");
+//         corsConfiguration.addAllowedOriginPattern("*");
+//         corsConfiguration.setAllowedMethods(Arrays.asList("POST", "GET", "DELETE", "PUT"));
+//         corsConfiguration.setAllowedHeaders(List.of("*"));
+//         corsConfiguration.setAllowCredentials(true);
+//         corsConfiguration.addExposedHeader("*");
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration);
-        return source;
-    }
+//         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//         source.registerCorsConfiguration("/**", corsConfiguration);
+//         return source;
+//     }
 
 
 }
