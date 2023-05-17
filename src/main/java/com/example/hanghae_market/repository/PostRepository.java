@@ -18,7 +18,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByPostTitleContaining(String keyword);
 
-    List<Post> findByInterestsUserAndInterestsInterestStatus(User user, Boolean interest_status);
+    @Query("SELECT p FROM Post p WHERE p.user = :user AND EXISTS (SELECT i FROM Interest i WHERE i.post = p AND i.interest_status = :interestStatus)")
+    List<Post> findPostsByUserAndInterestStatus(@Param("user") User user, @Param("interestStatus") Boolean interestStatus);
 
     List<Post> findAllByUserOrderByModifiedAtDesc(User user);
 
