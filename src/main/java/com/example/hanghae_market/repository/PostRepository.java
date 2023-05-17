@@ -16,7 +16,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT p FROM Post p WHERE p.interests='TRUE'")
     List<Post> findByOrderByInterestsDesc();
 
-    List<Post> findByPostTitleContaining(String keyword);
+    List<Post> findAllByPostTitleContaining(String keyword);
 
     @Query("SELECT p FROM Post p WHERE p.interests='TRUE'")
     List<Post> findByUser(User user);
