@@ -21,7 +21,8 @@ public class MypageService {
 
     @Transactional // 마이페이지 관심상품 조회
     public ResponseDto<List<PostResponseDto>> interestMypage(User user){
-        List<Post> myInterestPost = postRepository.findPostsByUserAndInterestStatus(user, true);
+        List<Post> myInterestPost = postRepository.findByInterestsUserAndInterestsInterestStatus(user, true);
+
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
         for (Post post : myInterestPost) {
             postResponseDtoList.add(new PostResponseDto(post));

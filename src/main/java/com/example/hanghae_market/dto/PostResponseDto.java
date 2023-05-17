@@ -36,6 +36,7 @@ public class PostResponseDto {
             this.imagePathList.add(imagePathResponseDto);
         }
 
+
         this.postId = post.getPostId();
         this.postTitle = post.getPostTitle();
         this.postContent = post.getPostContent();
