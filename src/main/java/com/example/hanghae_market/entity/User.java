@@ -38,7 +38,7 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
     
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "TB_USER", cascade = CascadeType.REMOVE)
     private List<Interest> interests;
 
     public User(String userId, String password, String email, String location, String phone, UserRole role) {
