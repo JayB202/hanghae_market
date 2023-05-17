@@ -21,7 +21,7 @@ public class Post extends Timestamped {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long postId;
 
-    @Column
+    @Column(nullable = true)
     private String image;
 
     @Column(nullable = false)
@@ -48,9 +48,8 @@ public class Post extends Timestamped {
     @ManyToOne
     private User user;
 
-    @ColumnDefault("0")
-    private Long postInterests;
-
+//    @ColumnDefault("0")
+//    private Long postInterests;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     List<Interest> interests;
@@ -66,7 +65,7 @@ public class Post extends Timestamped {
         this.specificLocation = postRequestDto.getSpecificLocation();
         this.isShared = postRequestDto.getIsShared();
         this.user = user;
-        this.postInterests = 0L;
+//        this.postInterests = 0L;
     }
 
     public void edit(PostRequestDto postRequestDto) {

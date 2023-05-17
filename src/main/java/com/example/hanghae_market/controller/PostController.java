@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("post")
+@RequestMapping("/post")
 public class PostController {
 
     private final PostService postService;
@@ -28,6 +28,11 @@ public class PostController {
     @PutMapping("/{postid}")
     public ResponseDto editPost(@PathVariable("postid") Long id, @RequestParam("image") MultipartFile image, @RequestParam PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.editPost(id, postRequestDto, userDetails.getUser());
+    }
+
+    @DeleteMapping("/{postid}/delete")
+    public ResponseDto deletePost(@PathVariable("postid") Long postid, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.deleteTrade(postid, userDetails.getUser());
     }
 
     @PostMapping("/{postid}/tradestatus")
@@ -45,7 +50,7 @@ public class PostController {
         return postService.postInterest(id, userDetails.getUser());
     }
 
-    @GetMapping
+    @GetMapping("")
     public ResponseDto<List<PostResponseDto>> findAllPost(){
         return postService.findAllPost();
     }
