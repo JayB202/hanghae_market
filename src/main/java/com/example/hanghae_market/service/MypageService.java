@@ -21,7 +21,7 @@ public class MypageService {
 
     @Transactional // 마이페이지 관심상품 조회
     public ResponseDto<List<PostResponseDto>> interestMypage(User user){
-        List<Post> myInterestPost = postRepository.findByUser(user);
+        List<Post> myInterestPost = postRepository.findByInterestsUserAndInterestsInterestStatus(user, true);
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
         for (Post post : myInterestPost) {
             postResponseDtoList.add(new PostResponseDto(post));
@@ -31,7 +31,7 @@ public class MypageService {
 
     @Transactional // 마이페이지 판매목록 조회
     public ResponseDto<List<PostResponseDto>> myPost(User user){
-        List<Post> postList = postRepository.findByUserOrderByModifiedAtDesc(user);
+        List<Post> postList = postRepository.findAllByUserOrderByModifiedAtDesc(user);
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
         for (Post post : postList) {
             postResponseDtoList.add(new PostResponseDto(post));
