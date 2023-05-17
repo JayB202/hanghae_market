@@ -22,6 +22,7 @@ public class Interest {
     private Post post;
 
     @ManyToOne
+    @JoinColumn(name = "interests_id")
     private User user;
 
     public Interest(boolean interest, Post post, User user) {
