@@ -1,18 +1,19 @@
-
 package com.example.hanghae_market.dto;
-
 
 import com.example.hanghae_market.entity.Interest;
 import com.example.hanghae_market.entity.Post;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
+@Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class PostResponseDto {
 
-    private MultipartFile image;
+    //    private List<ImagePath> imagePathList;
     private Long postId;
     private String postTitle;
     private String postContent;
@@ -27,6 +28,7 @@ public class PostResponseDto {
     private Boolean isShared;
 
     public PostResponseDto(Post post) {
+//        this.imagePathList = post.getImagePathList();
         this.postId = post.getPostId();
         this.postTitle = post.getPostTitle();
         this.postContent = post.getPostContent();

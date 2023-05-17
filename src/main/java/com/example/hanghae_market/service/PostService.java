@@ -28,17 +28,17 @@ public class PostService {
 
 
     @Transactional // 물품 등록
-    public ResponseDto addPost(MultipartFile image, PostRequestDto postRequestDto, User user) {
+    public ResponseDto addPost(PostRequestDto postRequestDto, User user) {
         Post post = new Post(postRequestDto, user);
         postRepository.saveAndFlush(post);
         return ResponseDto.setSuccess("물품 등록 완료");
     }
 
     @Transactional // 물품 수정
-    public ResponseDto editPost(Long id, MultipartFile image, PostRequestDto postRequestDto, User user) {
+    public ResponseDto editPost(Long id, PostRequestDto postRequestDto, User user) {
         Post post = postValidation(id);
         if (post.getUser().getUserId().equals(user.getUserId())){
-            post.edit(image, postRequestDto);
+            post.edit(postRequestDto);
         } else throw new IllegalArgumentException("권한이 없습니다");
         return ResponseDto.setSuccess("물품이 수정되었습니다");
     }
@@ -50,6 +50,15 @@ public class PostService {
             post.editTd(tradeState);
         } else throw new IllegalArgumentException("권한이 없습니다");
         return ResponseDto.setSuccess("거래 상태 변경 완료");
+    }
+
+    @Transactional // 삭제
+    public ResponseDto deleteTrade(Long id, User user){
+        Post post = postValidation(id);
+        if (post.getUser().getUserId().equals(user.getUserId())){
+            postRepository.deleteById(id);
+        } else throw new IllegalArgumentException("권한이 없습니다");
+        return ResponseDto.setSuccess("data delete");
     }
 
     @Transactional // 끌올

@@ -20,13 +20,14 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/add")    public ResponseDto addPost(@RequestParam("image")MultipartFile image, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.addPost(image, postRequestDto, userDetails.getUser());
+    @PostMapping("/add")
+    public ResponseDto addPost(@RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.addPost(postRequestDto, userDetails.getUser());
     }
 
     @PutMapping("/{postid}")
     public ResponseDto editPost(@PathVariable("postid") Long id, @RequestParam("image") MultipartFile image, @RequestParam PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.editPost(id, image, postRequestDto, userDetails.getUser());
+        return postService.editPost(id, postRequestDto, userDetails.getUser());
     }
 
     @PostMapping("/{postid}/tradestatus")
