@@ -11,11 +11,16 @@ import com.example.hanghae_market.repository.RefreshTokenRepository;
 import com.example.hanghae_market.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.example.hanghae_market.jwt.JwtUtil.ACCESS_KEY;
@@ -41,11 +46,11 @@ public class UserService {
         String location = userRequestDto.getLocation();
         String userRole = userRequestDto.getUserRole();
 
-        Optional<User> found = userRepository.findByUserId(userId);
-
-        if (found.isPresent()) {
-            return new UserResponseDto("아이디 중복", HttpStatus.BAD_REQUEST);
-        }
+//        Optional<User> found = userRepository.findByUserId(userId);
+//
+//        if (found.isPresent()) {
+//            return new UserResponseDto("아이디 중복", HttpStatus.BAD_REQUEST);
+//        }
 
         UserRole role;
         // 관리자 토큰 확인( 일반사용자인지 관리자인지 )
@@ -60,6 +65,16 @@ public class UserService {
         User user = new User(userId, password, email, location, phone,  role);
         userRepository.save(user);
         return new UserResponseDto("회원 가입이 성공했습니다. 환영합니다.", HttpStatus.OK);
+    }
+
+    //중복 체크
+    public UserResponseDto idCheck(Map<String, String> userId) {
+        Optional<User> found = userRepository.findByUserId(String.valueOf(userId.get("userId")));
+
+        if (found.isPresent()) {
+            return new UserResponseDto("사용중인 아이디입니다.", HttpStatus.BAD_REQUEST);
+        }
+        return new UserResponseDto("사용 가능한 아이디입니다.", HttpStatus.OK);
     }
 
     @Transactional
@@ -118,6 +133,29 @@ public class UserService {
         refreshTokenRepository.delete(refreshToken);
 
         return new UserResponseDto("로그아웃 성공", HttpStatus.OK);
+    }
+
+    public void certifiedPhoneNumber(String userPhoneNumber, int randomNumber) {
+        String api_key = "NCSWA6JF3ZIAZEZQ";
+        String api_secret = "UCLVBF51YFVWUX63PFQKLBTUBBVNZWBU";
+        Message coolsms = new Message(api_key, api_secret);
+
+        // 4 params(to, from, type, text) are mandatory. must be filled
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("to", userPhoneNumber);    // 수신전화번호
+        params.put("from", "01040742070");    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
+        params.put("type", "SMS");
+        params.put("text", "[HangHaeMarket] 인증번호는" + "["+randomNumber+"]" + "입니다."); // 문자 내용 입력
+        params.put("app_version", "app 1.2"); // application name and version
+
+        try {
+            JSONObject obj = coolsms.send(params);
+            System.out.println(obj.toString());
+        } catch (CoolsmsException e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getCode());
+        }
+
     }
 
 }
