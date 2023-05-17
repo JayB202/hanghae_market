@@ -111,7 +111,7 @@ public class PostService {
 
     @Transactional // 검색상품 조회
     public ResponseDto<List<PostResponseDto>> findSearch(String keyword){
-        List<Post> searchPost = postRepository.findByPostTitleContaining(keyword);
+        List<Post> searchPost = postRepository.findAllByPostTitleContaining(keyword);
         if (searchPost.isEmpty()){
             ResponseDto.setBadRequest("검색 결과가 없습니다");
         } else {
