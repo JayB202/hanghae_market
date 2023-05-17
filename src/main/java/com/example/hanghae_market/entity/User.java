@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.List;
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -31,6 +33,9 @@ public class User {
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Interest> interests;
 
     public User(String userId, String password, String email, String location, String phone, UserRole role) {
         this.userId = userId;
