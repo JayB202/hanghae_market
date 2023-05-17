@@ -54,6 +54,9 @@ public class Post extends Timestamped {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     List<Interest> interests;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    List<ImagePath> imagePathList;
+
 
     public Post(PostRequestDto postRequestDto, User user) {
 //        this.image = postRequestDto.getImage();
