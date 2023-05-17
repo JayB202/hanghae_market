@@ -68,6 +68,7 @@ public class PostService {
             imagePathRepository.saveAndFlush(imagePath);
             imagePathList.add(imagePath);
         }
+        post.setImagePathList(imagePathList);
         postRepository.saveAndFlush(post);
         return ResponseDto.setSuccess("물품 등록 완료");
     }
