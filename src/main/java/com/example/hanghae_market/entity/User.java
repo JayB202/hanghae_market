@@ -2,6 +2,7 @@
 package com.example.hanghae_market.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,9 +15,13 @@ import org.hibernate.annotations.ColumnDefault;
 public class User {
     @Id
     @Column(name = "userId", nullable = false, unique = true)
+    @Pattern(regexp = "^(?=.*[a-zA-Z0-9]).{5,12}$",
+            message = "아이디는 5-12자 문자, 숫자로 입력해주세요.")
     private String userId;
 
     @Column(nullable = false)
+    @Pattern(regexp = "^(?=.*[a-zA-Z0-9]).{5,12}$",
+            message = "비밀번호는 5-12자 문자, 숫자로 입력해주세요.")
     private String password;
 
     @Column(nullable = false)
