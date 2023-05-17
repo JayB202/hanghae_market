@@ -83,7 +83,6 @@ public class UserService {
         String userId = userRequestDto.getUserId();
         String password = userRequestDto.getPassword();
 
-        try {
             User user = userRepository.findByUserId(userId).orElseThrow(() -> new IllegalArgumentException("아이디가 존재하지않습니다."));
 
             if (!passwordEncoder.matches(password, user.getPassword())) {
@@ -111,10 +110,6 @@ public class UserService {
             return new UserResponseDto("성공", HttpStatus.OK);
             //  response.addHeader(jwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserId(), "USER"));
             //  return new UserResponseDto("로그인 성공", HttpStatus.OK);
-
-        } catch (IllegalArgumentException e) {
-            return new UserResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
 
     }
 
