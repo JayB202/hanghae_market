@@ -13,15 +13,14 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByOrderByModifiedAtDesc();
 
-    @Query("SELECT p FROM Post p WHERE p.interests='TRUE'")
-    List<Post> findByOrderByInterestsDesc();
+    @Query("SELECT p, COUNT(i) as interestsCount FROM Post p LEFT JOIN p.interests i GROUP BY p ORDER BY interestsCount DESC")
+    List<Post> findAllByOrderByInterestsCountDesc();
 
     List<Post> findAllByPostTitleContaining(String keyword);
 
-    @Query("SELECT p FROM Post p WHERE p.interests='TRUE'")
-    List<Post> findByUser(User user);
+    List<Post> findByInterestsUserAndInterestsInterestStatus(User user, Boolean interest_status);
 
-    List<Post> findByUserOrderByModifiedAtDesc(User user);
+    List<Post> findAllByUserOrderByModifiedAtDesc(User user);
 
     Optional<Post> findByPostId(Long postId);
 
