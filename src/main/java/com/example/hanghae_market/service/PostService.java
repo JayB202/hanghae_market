@@ -101,7 +101,7 @@ public class PostService {
 
     @Transactional // 추천상품 조회
     public ResponseDto<List<PostResponseDto>> findLikePost(){
-        List<Post> likepost = postRepository.findByOrderByInterestsDesc();
+        List<Post> likepost = postRepository.findAllByOrderByInterestsCountDesc();
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
         for (Post post : likepost) {
             postResponseDtoList.add(new PostResponseDto(post));
