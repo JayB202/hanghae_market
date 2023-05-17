@@ -6,8 +6,10 @@ import com.example.hanghae_market.entity.Post;
 import com.example.hanghae_market.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface InterestRepository extends JpaRepository<Interest, Long> {
     Optional<Interest> findByUserAndPost(User user, Post post);
+
 }

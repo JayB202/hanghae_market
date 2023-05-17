@@ -1,35 +1,74 @@
 package com.example.hanghae_market.service;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.hanghae_market.dto.PostRequestDto;
 import com.example.hanghae_market.dto.PostResponseDto;
 import com.example.hanghae_market.dto.ResponseDto;
+import com.example.hanghae_market.entity.ImagePath;
 import com.example.hanghae_market.entity.Interest;
 import com.example.hanghae_market.entity.Post;
 import com.example.hanghae_market.entity.User;
+import com.example.hanghae_market.repository.ImagePathRepository;
 import com.example.hanghae_market.repository.InterestRepository;
 import com.example.hanghae_market.repository.PostRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostService {
 
     private final PostRepository postRepository;
     private final InterestRepository interestRepository;
+    private final AmazonS3Client amazonS3Client;
+    private final ImagePathRepository imagePathRepository;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
 
     @Transactional // 물품 등록
-    public ResponseDto addPost(PostRequestDto postRequestDto, User user) {
+    public ResponseDto addPost(List<MultipartFile> multipartFileList, PostRequestDto postRequestDto, User user) {
         Post post = new Post(postRequestDto, user);
+        List<ImagePath> imagePathList = new ArrayList<>();
+        for (MultipartFile image : multipartFileList) {
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentType(image.getContentType());
+            objectMetadata.setContentLength(image.getSize());
+
+            String originalFilename = image.getOriginalFilename();
+            int index = originalFilename.lastIndexOf(".");
+            String ext = originalFilename.substring(index + 1);
+
+            String storeFileName = UUID.randomUUID() + "." + ext;
+            String key = "market/" + storeFileName;
+
+            try (InputStream inputStream = image.getInputStream()) {
+                amazonS3Client.putObject(new PutObjectRequest(bucket, key, inputStream, objectMetadata)
+                        .withCannedAcl(CannedAccessControlList.PublicRead));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            String storeFileUrl = amazonS3Client.getUrl(bucket, key).toString();
+            ImagePath imagePath = new ImagePath(originalFilename, storeFileUrl, post);
+            imagePathRepository.saveAndFlush(imagePath);
+            imagePathList.add(imagePath);
+        }
+        post.setImagePathList(imagePathList);
         postRepository.saveAndFlush(post);
         return ResponseDto.setSuccess("물품 등록 완료");
     }

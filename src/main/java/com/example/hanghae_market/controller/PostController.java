@@ -20,8 +20,8 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/add")
-    public ResponseDto addPost(@RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.addPost(postRequestDto, userDetails.getUser());
+    public ResponseDto addPost(@RequestParam("image") List<MultipartFile> multipartFileList, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.addPost(multipartFileList ,postRequestDto, userDetails.getUser());
     }
 
     @PutMapping("/{postid}")

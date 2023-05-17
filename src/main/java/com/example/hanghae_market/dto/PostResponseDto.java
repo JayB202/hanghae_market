@@ -31,10 +31,11 @@ public class PostResponseDto {
     private Boolean myinterest;
 
     public PostResponseDto(Post post) {
-//         for (ImagePath imagePath: post.getImagePathList()) {
-//             ImagePathResponseDto imagePathResponseDto = new ImagePathResponseDto(imagePath);
-//             this.imagePathList.add(imagePathResponseDto);
-//         }
+        for (ImagePath imagePath: post.getImagePathList()) {
+            ImagePathResponseDto imagePathResponseDto = new ImagePathResponseDto(imagePath);
+            this.imagePathList.add(imagePathResponseDto);
+        }
+
 
         this.postId = post.getPostId();
         this.postTitle = post.getPostTitle();
