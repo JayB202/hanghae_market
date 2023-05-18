@@ -1,5 +1,5 @@
 
-# cleon_당근마켓
+# clone_당근마켓
 
 
 
@@ -30,7 +30,7 @@
 |정종현</br>[@Shuan75](https://github.com/Shuan75)|
 |김영기</br>[@youngkikim14](https://github.com/youngkikim14)|
 
-FE git hub : 
+FE git hub : https://github.com/sbchoi5451/Carrot_Frontend
 
 ## ⚙️ Tech Stack
 <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> <br>
