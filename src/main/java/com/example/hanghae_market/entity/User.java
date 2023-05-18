@@ -18,13 +18,13 @@ import java.util.List;
 public class User {
     @Id
     @Column(name = "userId", nullable = false, unique = true)
-    @Pattern(regexp = "^(?=.*[a-zA-Z0-9]).{5,12}$",
-            message = "아이디는 5-12자 문자, 숫자로 입력해주세요.")
+//    @Pattern(regexp = "^(?=.*[a-zA-Z0-9]).{5,12}$",
+//            message = "아이디는 5-12자 문자, 숫자로 입력해주세요.")
     private String userId;
 
     @Column(nullable = false)
-    @Pattern(regexp = "^(?=.*[a-zA-Z0-9]).{5,12}$",
-            message = "비밀번호는 5-12자 문자, 숫자로 입력해주세요.")
+//    @Pattern(regexp = "^(?=.*[a-zA-Z0-9]).{5,12}$",  //^[a-zA-Z0-9]{5,12}$
+//            message = "비밀번호는 5-12자 문자, 숫자로 입력해주세요.")
     private String password;
 
     @Column(nullable = false)
@@ -40,11 +40,9 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
     
-    @OneToMany(mappedBy = "TB_USER", cascade = CascadeType.REMOVE)
-    private List<Interest> interests;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Interest> interests;
+
 
     public User(String userId, String password, String email, String location, String phone, UserRole role) {
         this.userId = userId;

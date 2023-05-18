@@ -25,7 +25,7 @@ public class ChatRoom extends  Timestamped{
     List<Chat> chatMessages = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="postId")
+    @JoinColumn(name ="post_id")
     private Post post;
 
     @ManyToOne(fetch = FetchType.EAGER)

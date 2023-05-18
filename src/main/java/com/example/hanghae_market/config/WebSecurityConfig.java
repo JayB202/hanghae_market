@@ -98,7 +98,6 @@ public class WebSecurityConfig {
        corsConfiguration.setAllowedOriginPatterns(List.of("*"));
        corsConfiguration.addAllowedOrigin("http://localhost:3000");
        corsConfiguration.addAllowedOrigin("http://hhmarket.s3-website.ap-northeast-2.amazonaws.com");
-       corsConfiguration.addAllowedOrigin("http://hhmarket.s3-website.ap-northeast-2.amazonaws.com:3000");
        corsConfiguration.addAllowedOriginPattern("*");
        corsConfiguration.setAllowedMethods(Arrays.asList("POST", "GET", "DELETE", "PUT"));
        corsConfiguration.setAllowedHeaders(List.of("*"));
