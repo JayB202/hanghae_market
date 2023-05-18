@@ -24,13 +24,13 @@ public class Interest {
     @ManyToOne
     private User user;
 
-    public Interest(boolean interest, Post post, User user) {
+    public Interest(Boolean interest, Post post, User user) {
         this.interest_status = interest;
         this.post = post;
         this.user = user;
     }
 
-    public void setInterest_status(boolean interest_status) {
+    public void setInterest_status(Boolean interest_status) {
         this.interest_status = interest_status;
     }
 }

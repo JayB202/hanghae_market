@@ -28,7 +28,7 @@ public class PostResponseDto {
     private LocalDateTime modifiedAt;
     private String specificLocation;
     private Boolean isShared;
-    private Boolean myinterest;
+//    private Boolean myinterest;
 
     public PostResponseDto(Post post) {
         for (ImagePath imagePath: post.getImagePathList()) {
@@ -44,12 +44,12 @@ public class PostResponseDto {
         this.interestCount = (int) post.getInterests().stream().filter(Interest::getInterest_status).count();
         this.tradeLocation = post.getUser().getLocation();
         this.tradeState = post.getTradeState();
-        this.userId = post.getUser().getUserId();
+        this.userId = post.getTradeLocation();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
         this.specificLocation = post.getSpecificLocation();
         this.isShared = post.getIsShared();
-        this.myinterest = post.getInterests().stream()
-            .anyMatch(interest -> interest.getUser().getUserId().equals(userId) && interest.getInterest_status());
+//        this.myinterest = post.getInterests().stream()
+//            .anyMatch(interest -> interest.getUser().getUserId().equals(userId) && interest.getInterest_status());
     }
 }

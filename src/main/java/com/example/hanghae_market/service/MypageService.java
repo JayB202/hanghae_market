@@ -3,8 +3,10 @@ package com.example.hanghae_market.service;
 
 import com.example.hanghae_market.dto.PostResponseDto;
 import com.example.hanghae_market.dto.ResponseDto;
+import com.example.hanghae_market.entity.Interest;
 import com.example.hanghae_market.entity.Post;
 import com.example.hanghae_market.entity.User;
+import com.example.hanghae_market.repository.InterestRepository;
 import com.example.hanghae_market.repository.PostRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,14 +20,14 @@ import java.util.List;
 public class MypageService {
 
     private final PostRepository postRepository;
+    private final InterestRepository interestRepository;
 
     @Transactional // 마이페이지 관심상품 조회
     public ResponseDto<List<PostResponseDto>> interestMypage(User user){
-        List<Post> myInterestPost = postRepository.findPostsByUserAndInterestStatus(user, true);
-
+        List<Interest> myInterestList = interestRepository.findAllByUser(user);
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
-        for (Post post : myInterestPost) {
-            postResponseDtoList.add(new PostResponseDto(post));
+        for(Interest interest  : myInterestList){
+            postResponseDtoList.add(new PostResponseDto(interest.getPost()));
         }
         return ResponseDto.setSuccess("My interest Post response", postResponseDtoList);
     }
