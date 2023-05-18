@@ -44,7 +44,7 @@ public class PostResponseDto {
         this.interestCount = (int) post.getInterests().stream().filter(Interest::getInterest_status).count();
         this.tradeLocation = post.getUser().getLocation();
         this.tradeState = post.getTradeState();
-        this.userId = post.getTradeLocation();
+        this.userId = post.getUser().getUserId();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
         this.specificLocation = post.getSpecificLocation();

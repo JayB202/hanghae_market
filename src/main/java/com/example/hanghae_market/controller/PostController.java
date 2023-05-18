@@ -4,12 +4,15 @@ package com.example.hanghae_market.controller;
 import com.example.hanghae_market.dto.PostRequestDto;
 import com.example.hanghae_market.dto.PostResponseDto;
 import com.example.hanghae_market.dto.ResponseDto;
+import com.example.hanghae_market.entity.Post;
 import com.example.hanghae_market.security.UserDetailsImpl;
 import com.example.hanghae_market.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -21,8 +24,8 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/add")
-    public ResponseDto addPost(@RequestParam("image") List<MultipartFile> multipartFileList, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.addPost(multipartFileList ,postRequestDto, userDetails.getUser());
+    public ResponseDto addPost(@RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.addPost(postRequestDto, userDetails.getUser());
     }
 
     @PutMapping("/{postid}")

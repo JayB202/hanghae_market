@@ -83,7 +83,12 @@ public class UserService {
         String userId = userRequestDto.getUserId();
         String password = userRequestDto.getPassword();
 
-            User user = userRepository.findByUserId(userId).orElseThrow(() -> new IllegalArgumentException("아이디가 존재하지않습니다."));
+            if(!userRepository.findByUserId(userId).isPresent()){
+                return new UserResponseDto("존재하지 않는 유저입니다", HttpStatus.BAD_REQUEST);
+            }
+            User user = userRepository.findByUserId(userId).orElseThrow();
+
+//          elseThrow(() ->  new IllegalArgumentException( "아이디가 존재하지않습니다.")); //return?
 
             if (!passwordEncoder.matches(password, user.getPassword())) {
                 return new UserResponseDto("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);

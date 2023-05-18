@@ -41,34 +41,37 @@ public class PostService {
 
 
     @Transactional // 물품 등록
-    public ResponseDto addPost(List<MultipartFile> multipartFileList, PostRequestDto postRequestDto, User user) {
-        Post post = new Post(postRequestDto, user);
-        List<ImagePath> imagePathList = new ArrayList<>();
-        for (MultipartFile image : multipartFileList) {
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentType(image.getContentType());
-            objectMetadata.setContentLength(image.getSize());
-
-            String originalFilename = image.getOriginalFilename();
-            int index = originalFilename.lastIndexOf(".");
-            String ext = originalFilename.substring(index + 1);
-
-            String storeFileName = UUID.randomUUID() + "." + ext;
-            String key = "market/" + storeFileName;
-
-            try (InputStream inputStream = image.getInputStream()) {
-                amazonS3Client.putObject(new PutObjectRequest(bucket, key, inputStream, objectMetadata)
-                        .withCannedAcl(CannedAccessControlList.PublicRead));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            String storeFileUrl = amazonS3Client.getUrl(bucket, key).toString();
-            ImagePath imagePath = new ImagePath(originalFilename, storeFileUrl, post);
-            imagePathRepository.saveAndFlush(imagePath);
-            imagePathList.add(imagePath);
-        }
-        post.setImagePathList(imagePathList);
+    public ResponseDto addPost(
+//            List<MultipartFile> multipartFileList,
+            PostRequestDto postRequestDto, User user) {
+            Post post = new Post(postRequestDto, user);
+//        if(!multipartFileList.isEmpty()){
+//            List<ImagePath> imagePathList = new ArrayList<>();
+//            for (MultipartFile image : multipartFileList) {
+//                ObjectMetadata objectMetadata = new ObjectMetadata();
+//                objectMetadata.setContentType(image.getContentType());
+//                objectMetadata.setContentLength(image.getSize());
+//
+//            String originalFilename = image.getOriginalFilename();
+//            int index = originalFilename.lastIndexOf(".");
+//            String ext = originalFilename.substring(index + 1);
+//
+//            String storeFileName = UUID.randomUUID() + "." + ext;
+//            String key = "market/" + storeFileName;
+//
+//            try (InputStream inputStream = image.getInputStream()) {
+//                amazonS3Client.putObject(new PutObjectRequest(bucket, key, inputStream, objectMetadata)
+//                        .withCannedAcl(CannedAccessControlList.PublicRead));
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//            String storeFileUrl = amazonS3Client.getUrl(bucket, key).toString();
+//            ImagePath imagePath = new ImagePath(originalFilename, storeFileUrl, post);
+//            imagePathRepository.saveAndFlush(imagePath);
+//            imagePathList.add(imagePath);
+//            }
+//            post.setImagePathList(imagePathList);}
         postRepository.saveAndFlush(post);
         return ResponseDto.setSuccess("물품 등록 완료");
     }
@@ -152,15 +155,14 @@ public class PostService {
     public ResponseDto<List<PostResponseDto>> findSearch(String keyword){
         List<Post> searchPost = postRepository.findAllByPostTitleContaining(keyword);
         if (searchPost.isEmpty()){
-            ResponseDto.setBadRequest("검색 결과가 없습니다");
+            return ResponseDto.setBadRequest("검색 결과가 없습니다");
         } else {
             List<PostResponseDto> postResponseDtoList = new ArrayList<>();
             for (Post post : searchPost) {
                 postResponseDtoList.add(new PostResponseDto(post));
-                return ResponseDto.setSuccess("searched data response", postResponseDtoList);
             }
+            return ResponseDto.setSuccess("searched data response", postResponseDtoList);
         }
-        return null;
     }
 
     private Post postValidation(Long id){
