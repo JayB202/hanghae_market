@@ -136,8 +136,8 @@ public class UserService {
     }
 
     public void certifiedPhoneNumber(String userPhoneNumber, int randomNumber) {
-        String api_key = "NCSWA6JF3ZIAZEZQ";
-        String api_secret = "UCLVBF51YFVWUX63PFQKLBTUBBVNZWBU";
+        String api_key = 
+        String api_secret =
         Message coolsms = new Message(api_key, api_secret);
 
         // 4 params(to, from, type, text) are mandatory. must be filled
